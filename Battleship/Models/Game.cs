@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Battleship.Models
 {
-    class Game
+    public class Game
     {
 
         #region StaticVariables
@@ -25,6 +26,7 @@ namespace Battleship.Models
         #endregion
 
         #region Properties
+        [Key]
         public int Id
         {
             get { return id; }
