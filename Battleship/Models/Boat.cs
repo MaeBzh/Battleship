@@ -25,8 +25,7 @@ namespace Battleship.Models
         private String column;
         private int width;
         private int height;
-        private String orientation;     
-        
+        private String orientation;
         #endregion
 
         #region Properties
@@ -65,7 +64,7 @@ namespace Battleship.Models
         {
             get { return orientation; }
             set { orientation = value; }
-        }       
+        }
         #endregion
 
         #region Constructors
