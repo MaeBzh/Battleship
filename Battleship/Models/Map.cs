@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Battleship.Models
 {
-    class BoatType
+    class Map
     {
 
         #region StaticVariables
@@ -20,10 +20,9 @@ namespace Battleship.Models
 
         #region Attributs
         private int id;
-        private String name;
-        private int defaultWidth;
-        private int defaultHeight;   
-                    
+        private int width;
+        private int height;      
+                             
         #endregion
 
         #region Properties
@@ -33,22 +32,16 @@ namespace Battleship.Models
             set { id = value; }
         }
 
-        public String Name
+        public int Width
         {
-            get { return name; }
-            set { name = value; }
+            get { return width; }
+            set { width = value; }
         }
 
-        public int DefaultWidth
+        public int Height
         {
-            get { return defaultWidth; }
-            set { defaultWidth = value; }
-        }
-
-        public int DefaultHeight
-        {
-            get { return defaultHeight; }
-            set { defaultHeight = value; }
+            get { return height; }
+            set { height = value; }
         }
         #endregion
 
@@ -56,17 +49,16 @@ namespace Battleship.Models
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public BoatType()
+        public Map()
         {
 
         }
 
-        public BoatType(int id, string name, int defaultWidth, int defaultHeight)
+        public Map(int id, int width, int height)
         {
             this.id = id;
-            this.name = name;
-            this.defaultWidth = defaultWidth;
-            this.defaultHeight = defaultHeight;
+            this.width = width;
+            this.height = height;
         }
         #endregion
 
