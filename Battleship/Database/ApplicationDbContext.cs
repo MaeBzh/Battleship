@@ -24,7 +24,6 @@ namespace Battleship.Database
         private DbSet<Boat> boats;
         private DbSet<BoatType> boatTypes;
         private DbSet<Game> games;
-        private DbSet<Map> maps;
         private DbSet<Player> players;
         private DbSet<Shot> shots;
 
@@ -36,7 +35,7 @@ namespace Battleship.Database
             get { return boats; }
             set { boats = value; }
         }
-        public DbSet<BoatType> BoatTypes
+        public DbSet<BoatType> BoatTypesDbSet
         {
             get { return boatTypes; }
             set { boatTypes = value; }
@@ -45,13 +44,8 @@ namespace Battleship.Database
         {
             get { return games; }
             set { games = value; }
-        }
-        public DbSet<Map> Maps
-        {
-            get { return maps; }
-            set { maps = value; }
-        }
-        public DbSet<Player> Players
+        }       
+        public DbSet<Player> PlayersDbSet
         {
             get { return players; }
             set { players = value; }
@@ -68,7 +62,7 @@ namespace Battleship.Database
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public ApplicationDbContext()
+        public ApplicationDbContext() : base("battleshipDB")
         {
             DevResetDatabase();                
         }

@@ -63,9 +63,8 @@ namespace Battleship.Models
 
         }
 
-        public BoatType(int id, string name, int defaultWidth, int defaultHeight)
+        public BoatType(string name, int defaultWidth, int defaultHeight)
         {
-            this.id = id;
             this.name = name;
             this.defaultWidth = defaultWidth;
             this.defaultHeight = defaultHeight;
@@ -76,6 +75,14 @@ namespace Battleship.Models
         #endregion
 
         #region Functions
+        public override string ToString()
+        {
+            return String.Format("id:{0} name:{1} default width:{2} default height:{3}\n",
+             this.Id,
+             this.Name,
+             this.DefaultWidth,
+             this.DefaultHeight);
+        }
         #endregion
 
         #region Events
