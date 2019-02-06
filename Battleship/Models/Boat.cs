@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,9 +27,11 @@ namespace Battleship.Models
         private int height;
         private String orientation;
              
+
         #endregion
 
         #region Properties
+        [Key]
         public int Id
         {
             get { return id; }
@@ -65,6 +68,7 @@ namespace Battleship.Models
             set { orientation = value; }
         }
 
+
         #endregion
 
         #region Constructors
@@ -80,7 +84,7 @@ namespace Battleship.Models
         #region StaticFunctions
         #endregion
 
-        #region Functions
+        #region Functions       
         #endregion
 
         #region Events
