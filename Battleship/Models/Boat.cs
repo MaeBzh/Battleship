@@ -71,11 +71,6 @@ namespace Battleship.Models
         {
             get { return orientation; }
             set { orientation = value; }
-<<<<<<< HEAD
-        }
-
-
-=======
         }
       
         [Column]
@@ -105,7 +100,6 @@ namespace Battleship.Models
             get { return player; }
             set { player = value; }
         }
->>>>>>> 85c4b4604e9871f73623af4cb21151e284576621
         #endregion
 
         #region Constructors
