@@ -22,11 +22,11 @@ namespace Battleship.Models
 
         #region Attributs
         private int id;
-        private int? x;
+        private String x;
         private String y;
         private int width;
         private int height;
-        private String orientation;
+        private Boolean orientation;
         private int boatTypeId;
         private BoatType boatType;
         private int playerId;
@@ -41,7 +41,7 @@ namespace Battleship.Models
             set { id = value; }
         }
         [Column]
-        public int? X
+        public String X
         {
             get { return x; }
             set { x = value; }
@@ -67,7 +67,7 @@ namespace Battleship.Models
         }
 
         [Column]
-        public String Orientation
+        public Boolean Orientation
         {
             get { return orientation; }
             set { orientation = value; }
@@ -123,6 +123,26 @@ namespace Battleship.Models
         #endregion
 
         #region Functions 
+        public void setHitBox(Boat boat)
+        {
+            List<String[]> cells = new List<String[]>();
+
+            String[] firstCell = new String[2];
+            firstCell[0] = boat.X;
+            firstCell[1] = boat.Y;
+            cells.Add(firstCell);
+            int nbCells = boat.Width * boat.Height;
+
+            for(int i = 0; i<nbCells; i++)
+            {
+                if(boat.Orientation)
+                {
+
+                }
+            }
+
+        }
+
         public override string ToString()
         {          
                return String.Format("id:{0} x:{1} y:{2} width:{3} height:{4} orientation:{5} boat type:{6}\n",
