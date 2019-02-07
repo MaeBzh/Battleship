@@ -1,5 +1,4 @@
-﻿using Battleship.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,15 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Battleship.Views
+namespace Battleship.UserControls
 {
     /// <summary>
-    /// Logique d'interaction pour GameWindow.xaml
+    /// Logique d'interaction pour UserControl1.xaml
     /// </summary>
-    public partial class GameWindow : Window
+    public partial class MapCell : UserControl
     {
+
         #region StaticVariables
         #endregion
 
@@ -27,22 +28,42 @@ namespace Battleship.Views
         #endregion
 
         #region Variables
-      
         #endregion
 
         #region Attributs
+        private int x;
+        private int y;
+        private Button button;
         #endregion
 
         #region Properties
+        public int X
+        {
+            get { return x; }
+            set { x = value; }
+        }
+
+        public int Y
+        {
+            get { return y; }
+            set { y = value; }
+        }
+
+        public Button Button
+        {
+            get { return button; }
+            set { button = value; }
+        }
         #endregion
 
         #region Constructors
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public GameWindow()
+        public MapCell()
         {
             InitializeComponent();
+            this.Button = this.button_cell;
         }
         #endregion
 
@@ -50,18 +71,14 @@ namespace Battleship.Views
         #endregion
 
         #region Functions
-        public Game GetConfiguration() {
-            Game game = Game.Instance;
-            return game;
-        }
-
-        
-
         #endregion
 
         #region Events
         #endregion
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

@@ -18,12 +18,13 @@ namespace Battleship.Models
         #endregion
 
         #region Variables
+        List<int[]> cells = new List<int[]>();
         #endregion
 
         #region Attributs
         private int id;
-        private String x;
-        private String y;
+        private int x;
+        private int y;
         private int width;
         private int height;
         private Boolean orientation;
@@ -41,13 +42,13 @@ namespace Battleship.Models
             set { id = value; }
         }
         [Column]
-        public String X
+        public int X
         {
             get { return x; }
             set { x = value; }
         }
         [Column]
-        public String Y
+        public int Y
         {
             get { return y; }
             set { y = value; }
@@ -117,25 +118,47 @@ namespace Battleship.Models
         #endregion
 
         #region Functions 
-        public void setHitBox(Boat boat)
-        {
-            List<String[]> cells = new List<String[]>();
 
-            String[] firstCell = new String[2];
-            firstCell[0] = boat.X;
-            firstCell[1] = boat.Y;
-            cells.Add(firstCell);
-            int nbCells = boat.Width * boat.Height;
+        public List<int[]> getHitBox()
+        {        
 
-            for(int i = 0; i<nbCells; i++)
+            int[] firstCell = new int[2];
+            firstCell[0] = this.X;
+            firstCell[1] = this.Y;
+            int nbCells = this.Width * this.Height;
+            System.Console.WriteLine("nbcells : " + nbCells + " firstcell:" + firstCell[0] + "," + firstCell[1] + "width:" + this.Width + " height:" + this.Height);
+
+
+            if (this.Orientation)
             {
-                if(boat.Orientation)
+                for (int j = firstCell[0]; j < (this.Width + firstCell[0]); j++)
                 {
-
+                    for (int k = firstCell[1]; k < (this.Height + firstCell[1]); k++)
+                    {
+                        int[] cell = new int[2];
+                        cell[0] = this.X + j - firstCell[0];
+                        cell[1] = this.Y + k - firstCell[1];
+                        this.cells.Add(cell);
+                    }
+                }
+            }
+            else
+            {
+                for (int j = firstCell[0]; j < (this.Height + firstCell[0]); j++)
+                {
+                    for (int k = firstCell[1]; k < (this.Width + firstCell[1]); k++)
+                    {
+                        int[] cell = new int[2];
+                        cell[0] = this.X + k - firstCell[0];
+                        cell[1] = this.Y + j - firstCell[1];
+                        this.cells.Add(cell);
+                    }
                 }
             }
 
+            return this.cells;
         }
+
 
         public override string ToString()
         {          
@@ -149,6 +172,7 @@ namespace Battleship.Models
                 this.BoatType.ToString()
                 );
         }
+
         #endregion
 
         #region Events

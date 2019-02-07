@@ -91,6 +91,8 @@ namespace Battleship.Models
         {
             this.width = 10;
             this.height = 10;
+            this.player1 = new Player("IA 1", true);
+            this.player2 = new Player("IA 2", true);
         }
         #endregion
 

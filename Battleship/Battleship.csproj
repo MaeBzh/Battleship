@@ -69,8 +69,11 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Database\ApplicationDbContext.cs" />
-    <Compile Include="Views\GameWindow.xaml.cs">
-      <DependentUpon>GameWindow.xaml</DependentUpon>
+    <Compile Include="UserControls\MapCell.xaml.cs">
+      <DependentUpon>MapCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -114,7 +117,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\GameWindow.xaml">
+    <Page Include="UserControls\MapCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

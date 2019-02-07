@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Battleship.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,54 @@ namespace Battleship.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        #region StaticVariables
+        #endregion
+
+        #region Constants
+        #endregion
+
+        #region Variables
+        #endregion
+
+        #region Attributs
+        #endregion
+
+        #region Properties
+        #endregion
+
+        #region Constructors
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public MainWindow()
         {
+
             InitializeComponent();
+     
+
+            Settings settings = new Settings();
+            settings.game = Game.Instance;
+            Boat boat = settings.game.Player1.Boats[0];
+            System.Console.WriteLine("boat : " + boat);
+            this.Content = new GamePage();
+
         }
+        #endregion
+
+        #region StaticFunctions
+        #endregion
+
+        #region Functions
+
+       
+     
+        #endregion
+
+        #region Events
+        #endregion
+
+
+
     }
 }
