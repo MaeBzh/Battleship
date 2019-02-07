@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Battleship
+namespace Battleship.Views
 {
     /// <summary>
     /// Logique d'interaction pour Settings.xaml
@@ -84,49 +84,49 @@ namespace Battleship
                 Boat boat1 = new Boat(destroyer);
                 boat1.X = "1";
                 boat1.Y = "A";
-                boat1.Orientation = "vertical";
+                boat1.Orientation = true;
                 boat1.Player = player1;
 
                 Boat boat2 = new Boat(crusader);
                 boat2.X = "2";
                 boat2.Y = "A";
-                boat2.Orientation = "vertical";
+                boat2.Orientation = true;
                 boat2.Player = player1;
 
                 Boat boat3 = new Boat(aircraftCarrier);
                 boat3.X = "3";
                 boat3.Y = "A";
-                boat3.Orientation = "vertical";
+                boat3.Orientation = true;
                 boat3.Player = player1;
 
                 Boat boat4 = new Boat(submarine);
                 boat4.X = "4";
                 boat4.Y = "A";
-                boat4.Orientation = "vertical";
+                boat4.Orientation = true;
                 boat4.Player = player1;
 
                 Boat boat5 = new Boat(destroyer);
                 boat5.X = "5";
                 boat5.Y = "A";
-                boat5.Orientation = "vertical";
+                boat5.Orientation = true;
                 boat5.Player = player2;
 
                 Boat boat6 = new Boat(crusader);
                 boat6.X = "6";
                 boat6.Y = "A";
-                boat6.Orientation = "vertical";
+                boat6.Orientation = true;
                 boat6.Player = player2;
 
                 Boat boat7 = new Boat(aircraftCarrier);
                 boat7.X = "7";
                 boat7.Y = "A";
-                boat7.Orientation = "vertical";
+                boat7.Orientation = true;
                 boat7.Player = player2;
 
                 Boat boat8 = new Boat(submarine);
                 boat8.X = "8";
                 boat8.Y = "A";
-                boat8.Orientation = "vertical";
+                boat8.Orientation = true;
                 boat8.Player = player2;
 
                 db.BoatsDbSet.Add(boat1);

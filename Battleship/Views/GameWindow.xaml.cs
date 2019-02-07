@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Battleship
+namespace Battleship.Views
 {
     /// <summary>
     /// Logique d'interaction pour GameWindow.xaml
@@ -27,12 +27,7 @@ namespace Battleship
         #endregion
 
         #region Variables
-        private Player player1;
-        private Player player2;
-        private Array player1Cells;
-        private Array player2Cells;
-        private Array player1TouchableCells;
-        private Array player2TouchableCells;
+      
         #endregion
 
         #region Attributs
