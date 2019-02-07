@@ -1,6 +1,9 @@
 ﻿using Battleship.Database;
 using Battleship.Models;
 using System;
+﻿using Battleship.Models;
+using System;
+using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,12 +34,14 @@ namespace Battleship
 
         #region Variables
         Game game;
+        ObservableCollection<BoatType> boattype = new ObservableCollection<BoatType>();
         #endregion
 
         #region Attributs
         #endregion
 
         #region Properties
+        public ObservableCollection<BoatType> Class1s { get; set; }
         #endregion
 
         #region Constructors
@@ -48,6 +53,13 @@ namespace Battleship
             InitializeComponent();
             InitializeGame();
         }
+
+        private void InitializeComponent()
+        {
+            throw new NotImplementedException();
+        }
+
+
         #endregion
 
         #region StaticFunctions
@@ -137,13 +149,25 @@ namespace Battleship
                 db.BoatsDbSet.Add(boat8);
 
                 db.SaveChanges();
-                this.txtX.Text = this.game.ToString();
+                //this.txtX.Text = this.game.ToString();
             }
         }
 
-        #endregion
+        }
 
-        #region Events
-        #endregion
-    }
+    #endregion
+
+    #region StaticFunctions
+    #endregion
+
+    #region Functions
+
+
+
+    #endregion
+
+    #region Events
+    #endregion
+
+
 }
