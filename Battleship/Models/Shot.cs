@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,10 @@ namespace Battleship.Models
 
         #region Attributs
         private int id;
-        private int row;
-        private String column;
-        private Boat hittenBoat;                         
+        private int x;
+        private int y;
+        private Player player;
+        private int playerId;
         #endregion
 
         #region Properties
@@ -34,22 +36,32 @@ namespace Battleship.Models
             set { id = value; }
         }
 
-        public int Row
+        [Column]
+        public int X
         {
-            get { return row; }
-            set { row = value; }
+            get { return x; }
+            set { x = value; }
         }
 
-        public String Column
+        [Column]
+        public int Y
         {
-            get { return column; }
-            set { column = value; }
+            get { return y; }
+            set { y = value; }
         }
 
-        public Boat HittenBoat
+        public Player Player
         {
-            get { return hittenBoat; }
-            set { hittenBoat = value; }
+            get { return player; }
+            set { player = value; }
+        }
+
+        [Column]
+        [ForeignKey("Player")]
+        public int PlayerId
+        {
+            get { return playerId; }
+            set { playerId = value; }
         }
         #endregion
 
@@ -61,12 +73,26 @@ namespace Battleship.Models
         {
 
         }
+
+        public Shot(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
         #endregion
 
         #region StaticFunctions
         #endregion
 
         #region Functions
+        public override string ToString()
+        {
+            return  String.Format("id:{0} x:{1} y:{2}\n",
+             this.Id,
+             this.X,
+             this.Y
+             );
+        }
         #endregion
 
         #region Events

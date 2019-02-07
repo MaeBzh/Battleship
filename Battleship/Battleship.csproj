@@ -64,6 +64,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,7 +96,6 @@
     <Compile Include="Models\Boat.cs" />
     <Compile Include="Models\BoatType.cs" />
     <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\Map.cs" />
     <Compile Include="Models\Player.cs" />
     <Compile Include="Models\Shot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -116,7 +122,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
