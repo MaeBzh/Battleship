@@ -6,6 +6,11 @@
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid>      
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="test" Grid.Row="1"></TextBox>
     </Grid>
 </Window>

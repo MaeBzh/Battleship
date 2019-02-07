@@ -30,7 +30,7 @@ namespace Battleship
         #endregion
 
         #region Variables
-        Game game;
+        public Game game;
         #endregion
 
         #region Attributs
@@ -46,7 +46,7 @@ namespace Battleship
         public Settings()
         {
             InitializeComponent();
-            InitializeGame();
+            setConfiguration();
         }
         #endregion
 
@@ -55,7 +55,7 @@ namespace Battleship
 
         #region Functions
 
-        public void InitializeGame()
+        public void setConfiguration()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
@@ -71,7 +71,9 @@ namespace Battleship
                 Player player1 = new Player("Toto", false);
                 Player player2 = new Player("IA", true);
 
-                this.game = new Game(15, 15);
+                this.game = Game.Instance;
+                this.game.Width = 15;
+                this.game.Height = 15;
                 this.game.Player1 = player1;
                 this.game.Player2 = player2;
                 db.GamesDbSet.Add(this.game);
@@ -80,49 +82,49 @@ namespace Battleship
                 db.PlayersDbSet.Add(player2);
 
                 Boat boat1 = new Boat(destroyer);
-                boat1.X = 1;
+                boat1.X = "1";
                 boat1.Y = "A";
                 boat1.Orientation = "vertical";
                 boat1.Player = player1;
 
                 Boat boat2 = new Boat(crusader);
-                boat2.X = 2;
+                boat2.X = "2";
                 boat2.Y = "A";
                 boat2.Orientation = "vertical";
                 boat2.Player = player1;
 
                 Boat boat3 = new Boat(aircraftCarrier);
-                boat3.X = 3;
+                boat3.X = "3";
                 boat3.Y = "A";
                 boat3.Orientation = "vertical";
                 boat3.Player = player1;
 
                 Boat boat4 = new Boat(submarine);
-                boat4.X = 4;
+                boat4.X = "4";
                 boat4.Y = "A";
                 boat4.Orientation = "vertical";
                 boat4.Player = player1;
 
                 Boat boat5 = new Boat(destroyer);
-                boat5.X = 5;
+                boat5.X = "5";
                 boat5.Y = "A";
                 boat5.Orientation = "vertical";
                 boat5.Player = player2;
 
                 Boat boat6 = new Boat(crusader);
-                boat6.X = 6;
+                boat6.X = "6";
                 boat6.Y = "A";
                 boat6.Orientation = "vertical";
                 boat6.Player = player2;
 
                 Boat boat7 = new Boat(aircraftCarrier);
-                boat7.X = 7;
+                boat7.X = "7";
                 boat7.Y = "A";
                 boat7.Orientation = "vertical";
                 boat7.Player = player2;
 
                 Boat boat8 = new Boat(submarine);
-                boat8.X = 8;
+                boat8.X = "8";
                 boat8.Y = "A";
                 boat8.Orientation = "vertical";
                 boat8.Player = player2;
@@ -144,6 +146,10 @@ namespace Battleship
         #endregion
 
         #region Events
+        public void btnEvent()
+        {
+            //send  to gameWindow with
+        }
         #endregion
     }
 }
