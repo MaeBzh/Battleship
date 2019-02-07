@@ -22,6 +22,7 @@ namespace Battleship.Views
     {
         public Homepage()
         {
+            System.Console.WriteLine("---------------dans le Homepage-----------");
             InitializeComponent();
             this.Content = new Settings();
 

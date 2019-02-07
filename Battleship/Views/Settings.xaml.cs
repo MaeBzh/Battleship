@@ -157,7 +157,28 @@ namespace Battleship.Views
             }
         }
 
+        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<string> data = new List<string>();
+            data.Add("aircraftCarrier");
+            data.Add("submarine");
+            data.Add("crusader");
+            data.Add("destroyer");
+         
+            var comboBox = sender as ComboBox;
+            comboBox.ItemsSource = data;
+            comboBox.SelectedIndex = 0;
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = sender as ComboBox;
+
+            string value = comboBox.SelectedItem as string;
+            //this.Title = "Selected: " + value;
+        }
+
+    }
 
     #endregion
 

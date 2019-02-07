@@ -31,8 +31,12 @@ namespace Battleship.Views
         {
             //Settings s1 = new Settings();
             //this.Content = s1;
+
+            System.Console.WriteLine("---------------dans le mainWindows-----------");
+
             Homepage h1 = new Homepage();
-            h1.Show();
+             h1.Show();
+           
 
         }
     }
