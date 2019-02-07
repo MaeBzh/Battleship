@@ -13,6 +13,7 @@ namespace Battleship.Models
 
         #region StaticVariables
         #endregion
+        static readonly Game _instance = new Game();
 
         #region Constants
         #endregion
@@ -27,7 +28,7 @@ namespace Battleship.Models
         private Player player1;
         private Player player2;
         private int? player1Id;
-        private int? player2Id;
+        private int? player2Id;        
         #endregion
 
         #region Properties
@@ -86,23 +87,22 @@ namespace Battleship.Models
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Game()
+        private Game()
         {
-
+            this.width = 10;
+            this.height = 10;
         }
-
-        public Game(int width, int height)
-        {
-            this.width = width;
-            this.height = height;
-        }
-
         #endregion
 
         #region StaticFunctions
         #endregion
 
         #region Functions
+        public static Game Instance
+        {
+            get { return _instance; }
+        }
+
         public override string ToString()
         {
             return String.Format("id:{0} width:{1} height:{2} player 1:{3} player 2:{4}\n",
