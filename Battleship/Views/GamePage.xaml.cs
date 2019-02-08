@@ -1,4 +1,5 @@
-﻿using Battleship.Models;
+﻿using Battleship.Database;
+using Battleship.Models;
 using Battleship.UserControls;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,10 @@ namespace Battleship.Views
         public List<Boat> boatsPlayer = Game.Instance.Player.Boats;
         public List<MapCell> occupiedCellsIA = new List<MapCell>();
         public List<MapCell> occupiedCellsPlayer = new List<MapCell>();
+        public List<Boat> touchedBoatIA = new List<Boat>();
+        public List<Boat> touchedBoatPlayer = new List<Boat>();
+        public List<MapCell> touchedCellsIA = new List<MapCell>();
+        public List<MapCell> touchedCellsPlayer = new List<MapCell>();
         #endregion
 
         #region Attributs
@@ -89,66 +94,81 @@ namespace Battleship.Views
                             Grid.SetRow(mapCell, j);
 
                             grid.Children.Add(mapCell);
-                        
+                            /*if(grid.Name == "playerGrid")
+                            {
+                                mapCell.Button.IsEnabled = false;
+                            }*/
+
                         }));
                     }
                 }
             });
         }
 
-        public MapCell setRandomFirstCell(Boat boat)
+        public Boolean setRandomPlace(Boat boat, Grid grid, List<MapCell> occupiedCells)
         {
-            MapCell result;
-            if (boat.Orientation)
+            using (ApplicationDbContext db = new ApplicationDbContext())
             {
+                occupiedCells.Clear();
+                Boolean possiblePlace = true;
                 Random random = new Random();
                 boat.X = random.Next(0, mapWidth + 1 - boat.Width);
                 boat.Y = random.Next(0, mapHeight + 1 - boat.Height);
-                result = playerGrid.Children.Cast<MapCell>().FirstOrDefault(fc => Grid.GetColumn(fc) == boat.X && Grid.GetRow(fc) == boat.Y);
+                db.BoatsDbSet.Add(boat);
+                db.SaveChanges();
+                foreach (int[] cell in boat.getHitBox())
+                {
+                    MapCell mapCell = grid.Children.Cast<MapCell>()
+                                .FirstOrDefault(fc => Grid.GetColumn(fc) == cell[0] && Grid.GetRow(fc) == cell[1]);
+                    if (occupiedCells.Contains(mapCell))
+                    {
+                        possiblePlace = false;
+                    }
+                    else
+                    {
+                        possiblePlace = true;
+                        occupiedCells.Add(mapCell);
+                    }
+                }
+                return possiblePlace;
             }
-            else
-            {
-                Random random = new Random();
-                boat.X = random.Next(0, mapWidth + 1 - boat.Height);
-                boat.Y = random.Next(0, mapHeight + 1 - boat.Width);
-                result = playerGrid.Children.Cast<MapCell>().FirstOrDefault(fc => Grid.GetColumn(fc) == boat.X && Grid.GetRow(fc) == boat.Y);
-            }
-            return result;
         }
 
         public void randomBoatPlacement(List<Boat> boatList)
         {
-           
+
             foreach (Boat boat in boatList)
-            {              
-                if(boat.Player.IsIA) {
-                    MapCell firstCell = this.setRandomFirstCell(boat);
-                    while (this.occupiedCellsIA.Contains(firstCell))
+            {
+                if (boat.Player.IsIA)
+                {
+                    while (!this.setRandomPlace(boat, this.iaGrid, this.occupiedCellsIA))
                     {
-                        firstCell = this.setRandomFirstCell(boat);
+                        this.setRandomPlace(boat, this.iaGrid, this.occupiedCellsIA);
                     }
-                    this.occupiedCellsIA.Add(firstCell);
-                    foreach (int[] coordinates in boat.getHitBox())
+                    foreach (MapCell occupiedCell in this.occupiedCellsIA)
                     {
-                        MapCell cell = iaGrid.Children.Cast<MapCell>()
-                            .FirstOrDefault(fc => Grid.GetColumn(fc) == coordinates[0] && Grid.GetRow(fc) == coordinates[1]);
-                        cell.Button.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0));
-                        this.occupiedCellsIA.Add(cell);
+                        if (occupiedCell != null)
+                        {
+                            occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
+                        }
                     }
-                } else { 
-                    MapCell firstCell = this.setRandomFirstCell(boat);
-                    while (this.occupiedCellsPlayer.Contains(firstCell))
+
+
+                }
+                else
+                {
+                    while (!this.setRandomPlace(boat, this.playerGrid, this.occupiedCellsPlayer))
                     {
-                        firstCell = this.setRandomFirstCell(boat);
+                        this.setRandomPlace(boat, this.playerGrid, this.occupiedCellsPlayer);
                     }
-                        this.occupiedCellsPlayer.Add(firstCell);
-                    foreach (int[] coordinates in boat.getHitBox())
+                    foreach (MapCell occupiedCell in this.occupiedCellsPlayer)
                     {
-                        MapCell cell = playerGrid.Children.Cast<MapCell>()
-                            .FirstOrDefault(fc => Grid.GetColumn(fc) == coordinates[0] && Grid.GetRow(fc) == coordinates[1]);
-                        cell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
-                        this.occupiedCellsPlayer.Add(cell);
+                        if (occupiedCell != null)
+                        {
+                            occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
+                        }
                     }
+
                 }
                 this.btn_random.IsEnabled = false;
             }
@@ -159,6 +179,28 @@ namespace Battleship.Views
             Game game = Game.Instance;
             Game.Instance.Currentplayer = Game.Instance.Player;
         }
+
+        public void checkForSankBoat(Boat boat)
+        {
+            int count = boat.getHitBox().Count;
+            if (count > 0)
+            {
+                foreach (int[] cell in boat.getHitBox())
+                {
+                    MapCell mapCell = iaGrid.Children.Cast<MapCell>()
+                                     .FirstOrDefault(fc => Grid.GetColumn(fc) == cell[0] && Grid.GetRow(fc) == cell[1]);
+                    if (this.touchedCellsIA.Contains(mapCell))
+                    {
+                        count--;
+                        if (count == 0)
+                        {
+                            System.Console.WriteLine(boat.BoatType.Name + " coulé ");
+                        }
+                    }
+                }
+            }
+        }
+
 
         #endregion
 
@@ -171,7 +213,7 @@ namespace Battleship.Views
         #endregion
 
         private void Btn_play_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             startGame();
         }
     }

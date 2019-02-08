@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Battleship.Models
 {
@@ -73,7 +71,7 @@ namespace Battleship.Models
             get { return orientation; }
             set { orientation = value; }
         }
-      
+
         [Column]
         [ForeignKey("BoatType")]
         public int BoatTypeId
@@ -107,7 +105,7 @@ namespace Battleship.Models
         /// <summary>
         /// Default constructor.
         /// </summary>
-      
+
         public Boat(BoatType boatType)
         {
             this.boatType = boatType;
@@ -120,14 +118,12 @@ namespace Battleship.Models
         #region Functions 
 
         public List<int[]> getHitBox()
-        {        
+        {
 
             int[] firstCell = new int[2];
-            firstCell[0] = this.X;
-            firstCell[1] = this.Y;
-            int nbCells = this.Width * this.Height;
-            System.Console.WriteLine("nbcells : " + nbCells + " firstcell:" + firstCell[0] + "," + firstCell[1] + "width:" + this.Width + " height:" + this.Height);
-
+            firstCell[0] = this.X - 1;
+            firstCell[1] = this.Y - 1;
+            int nbCells = this.Width * this.Height;          
 
             if (this.Orientation)
             {
@@ -138,7 +134,10 @@ namespace Battleship.Models
                         int[] cell = new int[2];
                         cell[0] = this.X + j - firstCell[0];
                         cell[1] = this.Y + k - firstCell[1];
-                        this.cells.Add(cell);
+                        if (!this.cells.Any(c => c[0] == cell[0] && c[1] == cell[1]))
+                        {
+                            this.cells.Add(cell);
+                        }
                     }
                 }
             }
@@ -150,27 +149,31 @@ namespace Battleship.Models
                     {
                         int[] cell = new int[2];
                         cell[0] = this.X + k - firstCell[0];
+
                         cell[1] = this.Y + j - firstCell[1];
-                        this.cells.Add(cell);
+                        if (!this.cells.Contains(cell))
+                            if (!this.cells.Any(c => c[0] == cell[0] && c[1] == cell[1]))
+                            {
+                                this.cells.Add(cell);
+                            }
                     }
                 }
             }
-
             return this.cells;
         }
 
 
         public override string ToString()
-        {          
-               return String.Format("id:{0} x:{1} y:{2} width:{3} height:{4} orientation:{5} boat type:{6}\n",
-                this.Id,
-                this.X,
-                this.Y,
-                this.Width,
-                this.Height,
-                this.Orientation,
-                this.BoatType.ToString()
-                );
+        {
+            return String.Format("id:{0} x:{1} y:{2} width:{3} height:{4} orientation:{5} boat type:{6}\n",
+             this.Id,
+             this.X,
+             this.Y,
+             this.Width,
+             this.Height,
+             this.Orientation,
+             this.BoatType.ToString()
+             );
         }
 
         #endregion
