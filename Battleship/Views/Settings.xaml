@@ -47,13 +47,12 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <TextBlock x:Name="boatType" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,160.6,0.2" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">Boat Type</TextBlock>
-            <TextBox x:Name="boatTypeTxt" Grid.Row="1" Grid.Column="0" Text="{Binding boat, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-
             <TextBlock x:Name="xBoat" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0.2,0,160.4,0.2" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">X boat</TextBlock>
             <TextBox x:Name="xBoatxt" Grid.Row="1" Grid.Column="1" Text="{Binding X, Mode=TwoWay}"></TextBox>
 
             <TextBlock x:Name="yBoat" Grid.Row="0" Grid.Column="2" Margin="0.4,0,0.4,0.2" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">Y boat</TextBlock>
             <TextBox x:Name="yBoatxt" Grid.Row="1" Grid.Column="2" Text="{Binding Y, Mode=TwoWay}"></TextBox>
+
         </Grid>
 
         <Grid x:Name="mapGrid" Grid.Row="3" Grid.Column="1">
@@ -74,8 +73,8 @@
         </Grid>
 
         <Button x:Name="playBtn" Grid.Row="3" Grid.Column="2" Margin="9.8,23.8,30,43.6" FontWeight="Bold" FontSize="14" >Play!</Button>
-        <Button x:Name="addboatBtn" Content="Add Boat" Grid.Column="1" HorizontalAlignment="Left" Margin="510,100.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="95" Height="27" FontWeight="Bold" FontSize="14"/>
-        <ComboBox x:Name="typeBoatCb" Grid.Column="2" HorizontalAlignment="Left" Margin="4.8,52.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Loaded="ComboBox_Loaded" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Button x:Name="addboatBtn" Content="Add Boat" Grid.Column="1" HorizontalAlignment="Left" Margin="510,100.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="95" Height="27" FontWeight="Bold" FontSize="14" Click="DbBtn_Click"/>
+        <ComboBox x:Name="typeBoatCb" Grid.Column="1" HorizontalAlignment="Left" Margin="23,100.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Loaded="ComboBox_Loaded" SelectionChanged="ComboBox_SelectionChanged" Text="{Binding Name}"/>
 
     </Grid>
 </Page>

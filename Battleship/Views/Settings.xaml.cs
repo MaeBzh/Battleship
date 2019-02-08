@@ -15,13 +15,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+
 
 namespace Battleship.Views
 {
     /// <summary>
     /// Logique d'interaction pour Settings.xaml
     /// </summary>
-    public partial class Settings : Page
+
+
+    public partial class Settings : Page, INotifyPropertyChanged
     {
 
         #region StaticVariables
@@ -33,13 +37,34 @@ namespace Battleship.Views
         #region Variables
         Game game;
         ObservableCollection<BoatType> boattype = new ObservableCollection<BoatType>();
+        ObservableCollection<Boat> boat = new ObservableCollection<Boat>();
         #endregion
+
+        #region Property changed implementation
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
+
+        #endregion
+
+
 
         #region Attributs
         #endregion
 
         #region Properties
-        public ObservableCollection<BoatType> Class1s { get; set; }
+        public ObservableCollection<BoatType> BoatType { get; set; }
+        public ObservableCollection<Boat> Boat { get; set; }
+
+
         #endregion
 
         #region Constructors
@@ -50,12 +75,9 @@ namespace Battleship.Views
         {
             InitializeComponent();
             InitializeGame();
-
-            this.Content = new Settings();
             this.DataContext = this;
+            //this.DataContext = boat;
         }
-
-
 
 
         #endregion
@@ -70,7 +92,7 @@ namespace Battleship.Views
             using (ApplicationDbContext db = new ApplicationDbContext())
             {
 
-                System.Console.WriteLine("----je passe ici-----------");
+                // System.Console.WriteLine("----je passe ici-----------");
 
 
                 BoatType destroyer = new BoatType("destroyer", 1, 2);
@@ -96,8 +118,8 @@ namespace Battleship.Views
                 db.PlayersDbSet.Add(player2);
 
                 Boat boat1 = new Boat(destroyer);
-                boat1.X = "1";
-                boat1.Y = "A";
+                boat1.X = this.xBoatxt.Text;
+                boat1.Y = this.yBoatxt.Text;
                 boat1.Orientation = true;
                 boat1.Player = player1;
 
@@ -164,7 +186,7 @@ namespace Battleship.Views
             data.Add("submarine");
             data.Add("crusader");
             data.Add("destroyer");
-         
+
             var comboBox = sender as ComboBox;
             comboBox.ItemsSource = data;
             comboBox.SelectedIndex = 0;
@@ -173,11 +195,21 @@ namespace Battleship.Views
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBox = sender as ComboBox;
-
             string value = comboBox.SelectedItem as string;
-            //this.Title = "Selected: " + value;
         }
 
+        private void DbBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string message =this.PlayerTxt.Text + " batiment " + this.typeBoatCb.Text + "X: " + this.xBoatxt.Text + " Y: " + this.yBoatxt.Text ;
+            System.Console.WriteLine(message);
+
+            using (var db = new ApplicationDbContext())
+            {
+            
+
+                //db.SaveChanges();
+            }
+        }
     }
 
     #endregion
@@ -186,9 +218,6 @@ namespace Battleship.Views
     #endregion
 
     #region Functions
-
-
-
     #endregion
 
     #region Events
