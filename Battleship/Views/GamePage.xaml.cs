@@ -31,8 +31,6 @@ namespace Battleship.Views
         public List<Boat> boatsPlayer = Game.Instance.Player.Boats;
         public List<MapCell> occupiedCellsIA = new List<MapCell>();
         public List<MapCell> occupiedCellsPlayer = new List<MapCell>();
-        public List<Boat> touchedBoatIA = new List<Boat>();
-        public List<Boat> touchedBoatPlayer = new List<Boat>();
         public List<MapCell> touchedCellsIA = new List<MapCell>();
         public List<MapCell> touchedCellsPlayer = new List<MapCell>();
         #endregion
@@ -78,6 +76,7 @@ namespace Battleship.Views
                 grid.RowDefinitions.Add(row);
             }
 
+
             Task.Factory.StartNew(() =>
             {
                 for (int i = 0; i < this.mapHeight; i++)
@@ -97,23 +96,24 @@ namespace Battleship.Views
                             /*if(grid.Name == "playerGrid")
                             {
                                 mapCell.Button.IsEnabled = false;
-                            }*/
-
+                            }*/    
+                            
                         }));
                     }
                 }
             });
+            
+
         }
 
         public Boolean setRandomPlace(Boat boat, Grid grid, List<MapCell> occupiedCells)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                occupiedCells.Clear();
+            {              
                 Boolean possiblePlace = true;
                 Random random = new Random();
-                boat.X = random.Next(0, mapWidth + 1 - boat.Width);
-                boat.Y = random.Next(0, mapHeight + 1 - boat.Height);
+                boat.X = random.Next(0, mapWidth - boat.Width);
+                boat.Y = random.Next(0, mapHeight - boat.Height);
                 db.BoatsDbSet.Add(boat);
                 db.SaveChanges();
                 foreach (int[] cell in boat.getHitBox())
@@ -178,10 +178,12 @@ namespace Battleship.Views
         {
             Game game = Game.Instance;
             Game.Instance.Currentplayer = Game.Instance.Player;
+            this.turn.Text = "A votre tour";
         }
 
-        public void checkForSankBoat(Boat boat)
+        public Boolean checkForSankBoat(Boat boat)
         {
+            Boolean sank = false;
             int count = boat.getHitBox().Count;
             if (count > 0)
             {
@@ -193,12 +195,13 @@ namespace Battleship.Views
                     {
                         count--;
                         if (count == 0)
-                        {
-                            System.Console.WriteLine(boat.BoatType.Name + " coulé ");
+                        {                            
+                            sank = true;
                         }
                     }
                 }
             }
+            return sank;
         }
 
 
@@ -207,14 +210,13 @@ namespace Battleship.Views
         #region Events
         private void Random_placement(object sender, RoutedEventArgs e)
         {
+            this.occupiedCellsIA.Clear();
+            this.occupiedCellsPlayer.Clear();
             this.randomBoatPlacement(this.boatsPlayerIa);
             this.randomBoatPlacement(this.boatsPlayer);
-        }
-        #endregion
-
-        private void Btn_play_Click(object sender, RoutedEventArgs e)
-        {
             startGame();
         }
+        #endregion
+      
     }
 }

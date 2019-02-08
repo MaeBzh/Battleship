@@ -15,10 +15,10 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid x:Name="iaGrid" Grid.Column="0">
-            
+
         </Grid>
         <Grid x:Name="playerGrid" Grid.Column="2">
-            
+
         </Grid>
         <Grid x:Name="gameInfos" Grid.Column="4" >
             <Grid.RowDefinitions>
@@ -27,7 +27,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Button x:Name="btn_random" Grid.Row="0" Click="Random_placement">Placement aléatoire</Button>
-            <Button x:Name="btn_play" Grid.Row="8" Click="Btn_play_Click">Jouer</Button>
+            <TextBlock x:Name="turn" Grid.Row="1"></TextBlock>
         </Grid>
     </Grid>
 </Page>
