@@ -25,10 +25,11 @@ namespace Battleship.Models
         private int id;
         private int width;
         private int height;        
-        private Player player1;
-        private Player player2;
-        private int? player1Id;
-        private int? player2Id;        
+        private Player playerIa;
+        private Player player;
+        private int? playerIaId;
+        private int? playerId;
+        private Player currentPlayer;      
         #endregion
 
         #region Properties
@@ -54,32 +55,39 @@ namespace Battleship.Models
         }
 
         [Column]
-        [ForeignKey("Player1")]
-        public int? Player1Id
+        [ForeignKey("PlayerIa")]
+        public int? PlayerIaId
         {
-            get { return player1Id; }
-            set { player1Id = value; }
+            get { return playerIaId; }
+            set { playerIaId = value; }
         }
 
-        public Player Player1
+        public Player PlayerIa
         {
-            get { return player1; }
-            set { player1 = value; }
+            get { return playerIa; }
+            set { playerIa = value; }
         }
 
         [Column]
-        [ForeignKey("Player2")]
-        public int? Player2Id
+        [ForeignKey("Player")]
+        public int? PlayerId
         {
-            get { return player2Id; }
-            set { player2Id = value; }
+            get { return playerId; }
+            set { playerId = value; }
         }
 
-        public Player Player2
+        public Player Player
         {
-            get { return player2; }
-            set { player2 = value; }
+            get { return player; }
+            set { player = value; }
         }
+
+        public Player Currentplayer
+        {
+            get { return currentPlayer; }
+            set { currentPlayer = value; }
+        }
+
 
         #endregion
 
@@ -91,8 +99,8 @@ namespace Battleship.Models
         {
             this.width = 10;
             this.height = 10;
-            this.player1 = new Player("IA 1", true);
-            this.player2 = new Player("IA 2", true);
+            this.playerIa = new Player("IA 1", true);
+            this.player = new Player("IA 2", true);
         }
         #endregion
 
@@ -111,8 +119,8 @@ namespace Battleship.Models
                 this.Id,
                 this.Width,
                 this.Height,
-                this.Player1.ToString(),
-                this.Player2.ToString());
+                this.PlayerIa.ToString(),
+                this.Player.ToString());
            
         }
         #endregion

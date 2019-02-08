@@ -24,10 +24,12 @@ namespace Battleship.Views
         #endregion
 
         #region Variables
-        int mapWidth = Game.Instance.Width;
-        int mapHeight = Game.Instance.Height;
-        List<Boat> boatsPlayer1 = Game.Instance.Player1.Boats;
-        List<Boat> boatsPlayer2 = Game.Instance.Player2.Boats;     
+        public int mapWidth = Game.Instance.Width;
+        public int mapHeight = Game.Instance.Height;
+        public List<Boat> boatsPlayerIa = Game.Instance.PlayerIa.Boats;
+        public List<Boat> boatsPlayer = Game.Instance.Player.Boats;
+        public List<MapCell> occupiedCellsIA = new List<MapCell>();
+        public List<MapCell> occupiedCellsPlayer = new List<MapCell>();
         #endregion
 
         #region Attributs
@@ -87,6 +89,7 @@ namespace Battleship.Views
                             Grid.SetRow(mapCell, j);
 
                             grid.Children.Add(mapCell);
+                        
                         }));
                     }
                 }
@@ -115,41 +118,46 @@ namespace Battleship.Views
 
         public void randomBoatPlacement(List<Boat> boatList)
         {
-            List<MapCell> occupiedCellsIA = new List<MapCell>();
-            List<MapCell> occupiedCellsPlayer = new List<MapCell>();
+           
             foreach (Boat boat in boatList)
             {              
                 if(boat.Player.IsIA) {
                     MapCell firstCell = this.setRandomFirstCell(boat);
-                    while (occupiedCellsIA.Contains(firstCell))
+                    while (this.occupiedCellsIA.Contains(firstCell))
                     {
                         firstCell = this.setRandomFirstCell(boat);
                     }
-                    occupiedCellsIA.Add(firstCell);
+                    this.occupiedCellsIA.Add(firstCell);
                     foreach (int[] coordinates in boat.getHitBox())
                     {
                         MapCell cell = iaGrid.Children.Cast<MapCell>()
                             .FirstOrDefault(fc => Grid.GetColumn(fc) == coordinates[0] && Grid.GetRow(fc) == coordinates[1]);
-                        cell.Button.Background = new SolidColorBrush(Color.FromArgb(0, 0, 0, 0));
-                        occupiedCellsIA.Add(cell);
+                        cell.Button.Background = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+                        this.occupiedCellsIA.Add(cell);
                     }
                 } else { 
                     MapCell firstCell = this.setRandomFirstCell(boat);
-                    while (occupiedCellsPlayer.Contains(firstCell))
+                    while (this.occupiedCellsPlayer.Contains(firstCell))
                     {
                         firstCell = this.setRandomFirstCell(boat);
                     }
-                        occupiedCellsPlayer.Add(firstCell);
+                        this.occupiedCellsPlayer.Add(firstCell);
                     foreach (int[] coordinates in boat.getHitBox())
                     {
                         MapCell cell = playerGrid.Children.Cast<MapCell>()
                             .FirstOrDefault(fc => Grid.GetColumn(fc) == coordinates[0] && Grid.GetRow(fc) == coordinates[1]);
-                        cell.Button.Background = new SolidColorBrush(Color.FromArgb(255, 0, 255, 0));
-                        occupiedCellsPlayer.Add(cell);
+                        cell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
+                        this.occupiedCellsPlayer.Add(cell);
                     }
                 }
                 this.btn_random.IsEnabled = false;
             }
+        }
+
+        public void startGame()
+        {
+            Game game = Game.Instance;
+            Game.Instance.Currentplayer = Game.Instance.Player;
         }
 
         #endregion
@@ -157,14 +165,14 @@ namespace Battleship.Views
         #region Events
         private void Random_placement(object sender, RoutedEventArgs e)
         {
-            this.randomBoatPlacement(this.boatsPlayer1);
-            this.randomBoatPlacement(this.boatsPlayer2);
+            this.randomBoatPlacement(this.boatsPlayerIa);
+            this.randomBoatPlacement(this.boatsPlayer);
         }
         #endregion
 
         private void Btn_play_Click(object sender, RoutedEventArgs e)
-        {
-
+        {            
+            startGame();
         }
     }
 }

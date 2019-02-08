@@ -44,13 +44,13 @@ namespace Battleship.Views
         public MainWindow()
         {
 
-            InitializeComponent();
-     
+            InitializeComponent();     
 
             Settings settings = new Settings();
             settings.game = Game.Instance;
-            Boat boat = settings.game.Player1.Boats[0];
+            Boat boat = settings.game.PlayerIa.Boats[0];
             System.Console.WriteLine("boat : " + boat);
+
             this.Content = new GamePage();
 
         }

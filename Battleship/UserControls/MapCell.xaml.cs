@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Battleship.Models;
+using Battleship.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -78,7 +80,35 @@ namespace Battleship.UserControls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            System.Console.WriteLine("button clicked :" + this.X + "," + this.Y);
+            Game game = Game.Instance;
+            Shot shotPlayer = new Shot();
+            shotPlayer.X = this.X;
+            shotPlayer.Y = this.Y;
+            game.Player.Shots.Add(shotPlayer);
+            game.Currentplayer = game.PlayerIa;
+            Grid grid = this.Parent as Grid;        
 
+            MapCell shootCell = grid.Children.Cast<MapCell>()
+                            .FirstOrDefault(fc => Grid.GetColumn(fc) == shotPlayer.X && Grid.GetRow(fc) == shotPlayer.Y);
+            Grid parentGrid = grid.Parent as Grid;
+            GamePage gamePage = parentGrid.Parent as GamePage;
+            System.Console.WriteLine("shoot cell : " + shootCell.X + "," + shootCell.Y);
+            if (gamePage.occupiedCellsIA.Contains(shootCell)){
+                shootCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+            } else
+            {
+                shootCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
+            }
+            // todo change color MapCell
+            // todo disable MapCell
+            new SolidColorBrush(Color.FromRgb(255, 0, 255));
+
+            // IA Turn
+            Shot shotIa = new Shot();
+            shotPlayer.X = this.X;
+            shotPlayer.Y = this.Y;
+            
         }
     }
 }
