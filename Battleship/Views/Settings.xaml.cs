@@ -54,7 +54,9 @@ namespace Battleship.Views
         #endregion
 
         #region Functions
-
+        /// <summary>
+        /// Hard coded configuration for a game.
+        /// </summary>
         public void setConfiguration()
         {
             using (ApplicationDbContext db = new ApplicationDbContext())

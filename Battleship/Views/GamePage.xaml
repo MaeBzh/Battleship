@@ -14,20 +14,34 @@
             <ColumnDefinition Width="20px"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="iaGrid" Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="ia" Grid.Row="0" Grid.Column="0">IA</TextBlock>
+        <Grid x:Name="iaGrid" IsEnabled="false" Grid.Column="0" Grid.Row="1">
+
 
         </Grid>
-        <Grid x:Name="playerGrid" Grid.Column="2">
+        <TextBlock x:Name="player" Grid.Row="0" Grid.Column="2">Vous</TextBlock>
+        <Grid x:Name="playerGrid" IsEnabled="false" Grid.Column="2" Grid.Row="1">
 
         </Grid>
-        <Grid x:Name="gameInfos" Grid.Column="4" >
+
+        <Grid x:Name="gameInfos" Grid.Column="4"  Grid.Row="1" Background="AliceBlue">
             <Grid.RowDefinitions>
                 <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
                 <RowDefinition Height="8*"/>
-                <RowDefinition />
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Button x:Name="btn_random" Grid.Row="0" Click="Random_placement">Placement aléatoire</Button>
-            <TextBlock x:Name="turn" Grid.Row="1"></TextBlock>
+            <TextBlock x:Name="winner" Grid.Row="1"></TextBlock>
+            <TextBlock x:Name="turn" Grid.Row="2"></TextBlock>
+            <ListView x:Name="shots" Grid.Row="3"></ListView>
+            <Button x:Name="btn_replay" Grid.Row="4" IsEnabled="False" Click="Btn_replay_Click">Rejouer</Button>
         </Grid>
     </Grid>
 </Page>
