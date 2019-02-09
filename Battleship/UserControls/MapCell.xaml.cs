@@ -57,25 +57,17 @@ namespace Battleship.UserControls
         {
             InitializeComponent();
             this.Button = this.button_cell;
-            this.button_cell.Background = new SolidColorBrush(Color.FromRgb(66, 66, 66));       
+            this.button_cell.Background = new SolidColorBrush(Color.FromRgb(66, 66, 66));
         }
         #endregion
 
         #region StaticFunctions
         #endregion
 
-        #region Functions 
+        #region Functions   
 
-        public void resolveShot()
+        public void playerTurn(Game game, Grid grid, Grid iaGrid, GamePage gamePage)
         {
-            Game game = Game.Instance;
-            Grid grid = this.Parent as Grid;
-            Grid parentGrid = grid.Parent as Grid;
-            Grid playerGrid = parentGrid.FindName("playerGrid") as Grid;
-            Grid iaGrid = parentGrid.FindName("iaGrid") as Grid;
-            GamePage gamePage = parentGrid.Parent as GamePage;
-
-
             //Player turn
             //todo : show text block "your turn"
 
@@ -118,7 +110,10 @@ namespace Battleship.UserControls
                 }
                 game.Currentplayer = game.PlayerIa;
             }
+        }
 
+        public void iaTurn(Game game, Grid grid, Grid playerGrid, GamePage gamePage)
+        {
             // IA Turn
             //todo : show text block "ia turn"
             gamePage.turn.Text = "Au tour de l'IA";
@@ -166,6 +161,36 @@ namespace Battleship.UserControls
             else if (gamePage.touchedCellsPlayer.Count == gamePage.occupiedCellsPlayer.Count)
             {
                 System.Console.WriteLine("Vous avez perdu !");
+            }
+        }
+
+
+        public void resolveShot()
+        {
+            Game game = Game.Instance;
+            Grid grid = this.Parent as Grid;
+            Grid parentGrid = grid.Parent as Grid;
+            Grid playerGrid = parentGrid.FindName("playerGrid") as Grid;
+            Grid iaGrid = parentGrid.FindName("iaGrid") as Grid;
+            GamePage gamePage = parentGrid.Parent as GamePage;
+
+            this.playerTurn(game, grid, iaGrid, gamePage);
+            this.iaTurn(game, grid, playerGrid, gamePage);
+
+            if (gamePage.touchedCellsIA.Count == gamePage.occupiedCellsIA.Count)
+            {
+                System.Console.WriteLine("Vous avez gagné !");
+                iaGrid.IsEnabled = false;
+                playerGrid.IsEnabled = false;
+                gamePage.winner.Text = "Vous avez gagné !";
+
+            }
+            else if (gamePage.touchedCellsPlayer.Count == gamePage.occupiedCellsPlayer.Count)
+            {
+                System.Console.WriteLine("Vous avez perdu !");
+                iaGrid.IsEnabled = false;
+                playerGrid.IsEnabled = false;
+                gamePage.winner.Text = "Vous avez gagné !";
             }
         }
 

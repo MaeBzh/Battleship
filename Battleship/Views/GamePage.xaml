@@ -27,7 +27,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Button x:Name="btn_random" Grid.Row="0" Click="Random_placement">Placement aléatoire</Button>
-            <TextBlock x:Name="turn" Grid.Row="1"></TextBlock>
+            <TextBlock x:Name="winner" Grid.Row="1"></TextBlock>
+            <TextBlock x:Name="turn" Grid.Row="2"></TextBlock>
         </Grid>
     </Grid>
 </Page>
