@@ -57,6 +57,7 @@ namespace Battleship.UserControls
         {
             InitializeComponent();
             this.Button = this.button_cell;
+            this.button_cell.Background = new SolidColorBrush(Color.FromRgb(66, 66, 66));       
         }
         #endregion
 
@@ -76,7 +77,7 @@ namespace Battleship.UserControls
 
 
             //Player turn
-            //show text block "your turn"
+            //todo : show text block "your turn"
 
             System.Console.WriteLine("Player turn");
 
@@ -119,7 +120,7 @@ namespace Battleship.UserControls
             }
 
             // IA Turn
-            //show text block "ia turn"
+            //todo : show text block "ia turn"
             gamePage.turn.Text = "Au tour de l'IA";
             System.Console.WriteLine("IA turn");
 
@@ -158,10 +159,12 @@ namespace Battleship.UserControls
             }
             game.Currentplayer = game.Player;
             gamePage.turn.Text = "A votre tour";
-            if(gamePage.touchedCellsIA.Count == gamePage.occupiedCellsIA.Count)
+            if (gamePage.touchedCellsIA.Count == gamePage.occupiedCellsIA.Count)
             {
                 System.Console.WriteLine("Vous avez gagné !");
-            } else if(gamePage.touchedCellsPlayer.Count == gamePage.occupiedCellsPlayer.Count) {
+            }
+            else if (gamePage.touchedCellsPlayer.Count == gamePage.occupiedCellsPlayer.Count)
+            {
                 System.Console.WriteLine("Vous avez perdu !");
             }
         }

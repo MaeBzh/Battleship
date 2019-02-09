@@ -96,8 +96,8 @@ namespace Battleship.Views
                             /*if(grid.Name == "playerGrid")
                             {
                                 mapCell.Button.IsEnabled = false;
-                            }*/    
-                            
+                            }*/
+
                         }));
                     }
                 }
@@ -149,7 +149,8 @@ namespace Battleship.Views
                     {
                         if (occupiedCell != null)
                         {
-                            occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
+                            //occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
+                            occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(66, 66, 66));
                         }
                     }
 
