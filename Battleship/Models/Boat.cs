@@ -116,7 +116,10 @@ namespace Battleship.Models
         #endregion
 
         #region Functions 
-
+        /// <summary>
+        /// Get the hitbox of a boat according the position of its first cell.
+        /// </summary>
+        /// <returns></returns>
         public List<int[]> getHitBox()
         {
 

@@ -57,7 +57,10 @@ namespace Battleship.Views
         #endregion
 
         #region Functions         
-
+        /// <summary>
+        /// Set the map according to size in config.
+        /// </summary>
+        /// <param name="grid"></param>
         public void setMap(Grid grid)
         {
             grid.Children.Clear();
@@ -102,10 +105,17 @@ namespace Battleship.Views
                     }
                 }
             });
-            
+
 
         }
 
+        /// <summary>
+        /// Check if boat can be place at a random place.
+        /// </summary>
+        /// <param name="boat"></param>
+        /// <param name="grid"></param>
+        /// <param name="occupiedCells"></param>
+        /// <returns></returns>
         public Boolean setRandomPlace(Boat boat, Grid grid, List<MapCell> occupiedCells)
         {
             using (ApplicationDbContext db = new ApplicationDbContext())
@@ -134,6 +144,10 @@ namespace Battleship.Views
             }
         }
 
+        /// <summary>
+        /// Place the boats on the map.
+        /// </summary>
+        /// <param name="boatList"></param>
         public void randomBoatPlacement(List<Boat> boatList)
         {
 
@@ -149,8 +163,8 @@ namespace Battleship.Views
                     {
                         if (occupiedCell != null)
                         {
-                            occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
-                            //occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(66, 66, 66));
+                            //occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 255));
+                            occupiedCell.Button.Background = new SolidColorBrush(Color.FromRgb(66, 66, 66));
                         }
                     }
 
@@ -174,14 +188,21 @@ namespace Battleship.Views
                 this.btn_random.IsEnabled = false;
             }
         }
-
+        /// <summary>
+        ///  start the game with the config in game.Instance(hard coded config).
+        /// </summary>
         public void startGame()
         {
             Game game = Game.Instance;
             Game.Instance.Currentplayer = Game.Instance.Player;
-            this.turn.Text = "A votre tour";
+            this.shots.Items.Add("Début de la partie");
         }
 
+        /// <summary>
+        /// Check if a boat is sank. 
+        /// </summary>
+        /// <param name="boat"></param>
+        /// <returns>true if a boat is sank, false if not.</returns>
         public Boolean checkForSankBoat(Boat boat)
         {
             Boolean sank = false;
@@ -205,19 +226,32 @@ namespace Battleship.Views
             return sank;
         }
 
-
         #endregion
 
         #region Events
         private void Random_placement(object sender, RoutedEventArgs e)
         {
+            this.iaGrid.IsEnabled = true;
+            this.playerGrid.IsEnabled = true;
             this.occupiedCellsIA.Clear();
             this.occupiedCellsPlayer.Clear();
+            this.touchedCellsIA.Clear();
+            this.touchedCellsIA.Clear();
             this.randomBoatPlacement(this.boatsPlayerIa);
             this.randomBoatPlacement(this.boatsPlayer);
             startGame();
         }
+
+        private void Btn_replay_Click(object sender, RoutedEventArgs e)
+        {
+            // not working : lust add function to reset grid and config
+            this.iaGrid.IsEnabled = true;
+            this.playerGrid.IsEnabled = true;
+            this.btn_random.IsEnabled = true;
+        }
+
         #endregion
-      
+
+
     }
 }

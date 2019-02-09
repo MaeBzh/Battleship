@@ -64,15 +64,18 @@ namespace Battleship.UserControls
         #region StaticFunctions
         #endregion
 
-        #region Functions   
-
+        #region Functions 
+        /// <summary>
+        /// When human player play, check if th shot touched a boat.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="grid"></param>
+        /// <param name="iaGrid"></param>
+        /// <param name="gamePage"></param>
         public void playerTurn(Game game, Grid grid, Grid iaGrid, GamePage gamePage)
         {
             //Player turn
             //todo : show text block "your turn"
-
-            System.Console.WriteLine("Player turn");
-
             Shot shotPlayer = new Shot();
             shotPlayer.X = this.X;
             shotPlayer.Y = this.Y;
@@ -84,7 +87,7 @@ namespace Battleship.UserControls
 
                 if (gamePage.occupiedCellsIA.Contains(shootCellIa))
                 {
-                    shootCellIa.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                    Boolean boatFound = false;
                     foreach (Boat boat in gamePage.boatsPlayerIa)
                     {
                         foreach (int[] cell in boat.getHitBox())
@@ -93,31 +96,52 @@ namespace Battleship.UserControls
                                    .FirstOrDefault(fc => Grid.GetColumn(fc) == cell[0] && Grid.GetRow(fc) == cell[1]);
                             if (mapCell == shootCellIa)
                             {
+                                boatFound = true;
                                 gamePage.touchedCellsIA.Add(shootCellIa);
                                 System.Console.WriteLine(boat.BoatType.Name + " touché");
+                                gamePage.shots.Items.Insert(0, "Vous : " + boat.BoatType.Name + " touché !");
+                                shootCellIa.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
                                 if (gamePage.checkForSankBoat(boat))
                                 {
                                     System.Console.WriteLine(boat.BoatType.Name + " coulé ");
+                                    gamePage.shots.Items.Insert(0, "Vous : " + boat.BoatType.Name + " coulé !");
                                 }
 
+                                break;
                             }
+                        }
+
+                        if (boatFound)
+                        {
+                            break;
                         }
                     }
                 }
                 else
                 {
+                    System.Console.WriteLine("A l'eau !");
+                    gamePage.shots.Items.Insert(0, "Vous : A l'eau !");
                     shootCellIa.Button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
                 }
+
                 game.Currentplayer = game.PlayerIa;
+                System.Console.WriteLine("IA turn");
+                gamePage.turn.Text = "Au tour de l'IA";
+
             }
         }
-
+        /// <summary>
+        /// When ia player play, add random coordinates and check if the shot touched a boat.
+        /// </summary>
+        /// <param name="game"></param>
+        /// <param name="grid"></param>
+        /// <param name="playerGrid"></param>
+        /// <param name="gamePage"></param>
         public void iaTurn(Game game, Grid grid, Grid playerGrid, GamePage gamePage)
         {
             // IA Turn
             //todo : show text block "ia turn"
-            gamePage.turn.Text = "Au tour de l'IA";
-            System.Console.WriteLine("IA turn");
 
             Shot shotIa = new Shot();
             Random random = new Random();
@@ -128,7 +152,7 @@ namespace Battleship.UserControls
                            .FirstOrDefault(fc => Grid.GetColumn(fc) == shotIa.X && Grid.GetRow(fc) == shotIa.Y);
             if (gamePage.occupiedCellsPlayer.Contains(shootCellPlayer))
             {
-                shootCellPlayer.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+                Boolean boatFound = false;
                 foreach (Boat boat in gamePage.boatsPlayer)
                 {
                     foreach (int[] cell in boat.getHitBox())
@@ -139,32 +163,39 @@ namespace Battleship.UserControls
                         {
                             gamePage.touchedCellsPlayer.Add(shootCellPlayer);
                             System.Console.WriteLine(boat.BoatType.Name + " touché");
+                            gamePage.shots.Items.Insert(0, "IA : " + boat.BoatType.Name + " touché !");
+                            shootCellPlayer.Button.Background = new SolidColorBrush(Color.FromRgb(255, 0, 0));
+
+                            // Boat is killed 
                             if (gamePage.checkForSankBoat(boat))
                             {
                                 System.Console.WriteLine(boat.BoatType.Name + " coulé ");
+                                gamePage.shots.Items.Insert(0, "IA : " + boat.BoatType.Name + " coulé !");
                             }
-
+                            break;
                         }
                     }
+
+                    if (boatFound)
+                    {
+                        break;
+                    }
+                   
                 }
-            }
-            else
+            } else
             {
+                System.Console.WriteLine(" à l'eau !");
+                gamePage.shots.Items.Insert(0, "IA : à l'eau !");
                 shootCellPlayer.Button.Background = new SolidColorBrush(Color.FromRgb(255, 255, 255));
             }
             game.Currentplayer = game.Player;
-            gamePage.turn.Text = "A votre tour";
-            if (gamePage.touchedCellsIA.Count == gamePage.occupiedCellsIA.Count)
-            {
-                System.Console.WriteLine("Vous avez gagné !");
-            }
-            else if (gamePage.touchedCellsPlayer.Count == gamePage.occupiedCellsPlayer.Count)
-            {
-                System.Console.WriteLine("Vous avez perdu !");
-            }
+            System.Console.WriteLine("Player turn");
+            gamePage.turn.Text = "A votre tour !";
         }
 
-
+        /// <summary>
+        /// resolve ia and players shots
+        /// </summary>
         public void resolveShot()
         {
             Game game = Game.Instance;
@@ -182,6 +213,7 @@ namespace Battleship.UserControls
                 System.Console.WriteLine("Vous avez gagné !");
                 iaGrid.IsEnabled = false;
                 playerGrid.IsEnabled = false;
+                gamePage.btn_replay.IsEnabled = true;
                 gamePage.winner.Text = "Vous avez gagné !";
 
             }
@@ -190,10 +222,11 @@ namespace Battleship.UserControls
                 System.Console.WriteLine("Vous avez perdu !");
                 iaGrid.IsEnabled = false;
                 playerGrid.IsEnabled = false;
+                gamePage.btn_replay.IsEnabled = true;
                 gamePage.winner.Text = "Vous avez gagné !";
             }
         }
-
+       
         #endregion
 
         #region Events
