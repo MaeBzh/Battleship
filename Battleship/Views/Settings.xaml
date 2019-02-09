@@ -1,27 +1,80 @@
-﻿<Window x:Class="Battleship.Views.Settings"
+﻿<Page x:Class="Battleship.Views.Settings"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship.Views"
         mc:Ignorable="d"
-        Title="Settings" Height="450" Width="900">
+        d:DesignHeight="450" d:DesignWidth="900"
+        Title="Settings">
 
-    <Grid>
+    <Grid  x:Name="settingsGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <TextBox x:Name="txtBoat"  Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontWeight="Bold" FontSize="18">Configurer le jeu</TextBox>
 
-        <TextBox x:Name="txtBoat"  Grid.Column="0" Grid.Row="0">boat</TextBox>
-        <TextBox x:Name="txtX"  Grid.Column="1" Grid.Row="0"></TextBox>
-        <Button>
-            <Rectangle Height="40" Width="40" Fill="Blue"/>
-        </Button>
+        <Grid  x:Name="playerGrid" Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="player" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center">Player name</TextBlock>
+            <TextBox x:Name="PlayerTxt" Grid.Row="0" Grid.Column="1" Text="{Binding Player, Mode=OneWay}"></TextBox>
+
+        </Grid>
+
+        <Grid x:Name="boatGrid" Grid.Row="2" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="boatType" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,160.6,0.2" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">Boat Type</TextBlock>
+            <TextBlock x:Name="xBoat" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Margin="0.2,0,160.4,0.2" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">X boat</TextBlock>
+            <TextBox x:Name="xBoatxt" Grid.Row="1" Grid.Column="1" Text="{Binding X, Mode=TwoWay}"></TextBox>
+
+            <TextBlock x:Name="yBoat" Grid.Row="0" Grid.Column="2" Margin="0.4,0,0.4,0.2" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">Y boat</TextBlock>
+            <TextBox x:Name="yBoatxt" Grid.Row="1" Grid.Column="2" Text="{Binding Y, Mode=TwoWay}"></TextBox>
+
+        </Grid>
+
+        <Grid x:Name="mapGrid" Grid.Row="3" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="mapWidth" Grid.Row="0" Grid.Column="0" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">Map Width</TextBlock>
+            <TextBox x:Name="mapWidthTxt" Grid.Row="1" Grid.Column="0" Text="{Binding game.Width, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+            <TextBlock x:Name="mapHeight" Grid.Row="0" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Bottom" HorizontalAlignment="Center">Map Height</TextBlock>
+            <TextBox x:Name="mapHeightTxt" Grid.Row="1" Grid.Column="1" Text="{Binding game.Height, Mode=TwoWay}"></TextBox>
+        </Grid>
+
+        <Button x:Name="playBtn" Grid.Row="3" Grid.Column="2" Margin="9.8,23.8,30,43.6" FontWeight="Bold" FontSize="14" >Play!</Button>
+        <Button x:Name="addboatBtn" Content="Add Boat" Grid.Column="1" HorizontalAlignment="Left" Margin="510,100.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="95" Height="27" FontWeight="Bold" FontSize="14" Click="DbBtn_Click"/>
+        <ComboBox x:Name="typeBoatCb" Grid.Column="1" HorizontalAlignment="Left" Margin="23,100.4,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" Loaded="ComboBox_Loaded" SelectionChanged="ComboBox_SelectionChanged" Text="{Binding Name}"/>
+
     </Grid>
-</Window>
+</Page>
